@@ -36,9 +36,13 @@ export class Fish extends Organism {
   }
 
   _render() {
+    const color = random(0, 360)
     return this.draw
       .image(this._image())
       .size(this.size, this.size)
+      .attr({
+        filter: `hue-rotate(${color}deg)`
+      })
   }
 
   _image(){
