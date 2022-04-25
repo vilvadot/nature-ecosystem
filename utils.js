@@ -27,6 +27,12 @@ export class Vector {
     this.y = this.y + vector.y
     return this;
   }
+
+  multiply(vector){
+    this.x = this.x * vector.x
+    this.y = this.y * vector.y
+    return this
+  }
 }
 
 export class Debugging {
