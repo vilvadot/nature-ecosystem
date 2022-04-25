@@ -6,7 +6,7 @@ const water = new Water()
 const creatures = []
 
 times(10, () => creatures.push(new Alga()))
-times(30, () => creatures.push(new Fish()))
+times(1, () => creatures.push(new Fish()))
 
 function mainLoop() {
   Debugging.render({ O2: water.oxygen.getLevel() })

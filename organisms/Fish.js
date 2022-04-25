@@ -8,15 +8,23 @@ export class Fish extends Organism {
     super()
     this.position = Vector.RANDOM(WIDTH, HEIGHT)
     this.size = random(150)
+    this._setupAnimation()
     this.orientation = new Orientation()
     this.graphic = this._render()
-    this._setupAnimation()
   }
 
   update() {
     this._checkOrientation()
+    this._checkBounds()
     this._move()
     this._consumeO2()
+  }
+
+  _checkBounds() {
+    if (!Bounds.fitsX(this.position.x)){
+      this.acceleration.multiply(new Vector(-1, 1))
+      this._flip()
+    }
   }
 
   _setupAnimation() {
@@ -29,15 +37,23 @@ export class Fish extends Organism {
 
   _render() {
     return this.draw
-      .image('/organisms/fish.png')
+      .image(this._image())
       .size(this.size, this.size)
+  }
+
+  _image(){
+    return this.orientation.isRight() ? '/organisms/fish_right.png' : '/organisms/fish_left.png'
+  }
+
+  _flip() {
+    this.orientation.flip()
+    this.graphic.load(this._image())
   }
 
   _checkOrientation() {
     const isGoingLeft = this.acceleration.x <= 0;
     if (isGoingLeft && this.orientation.isRight()) {
-      this.orientation.flip()
-      this.graphic.load('/organisms/fish_left.png')
+      this._flip()
     }
   }
 
@@ -52,6 +68,12 @@ export class Fish extends Organism {
   }
 }
 
+class Bounds{
+  static fitsX(position){
+    return position > 0 && position < WIDTH
+  }
+}
+
 class Orientation {
   constructor() {
     this.heading = 'RIGHT'
@@ -62,7 +84,7 @@ class Orientation {
   }
 
   flip() {
-    if (this.heading === 'RIGHT') this.heading = 'LEFT'
-    if (this.heading === 'LEFT') this.heading = 'RIGHT'
+    if (this.heading === 'RIGHT') return this.heading = 'LEFT'
+    if (this.heading === 'LEFT') return this.heading = 'RIGHT'
   }
 }

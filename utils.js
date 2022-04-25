@@ -3,7 +3,7 @@ export const random = (max, min = 0) => {
 }
 
 export const times = (times, callback) => {
-  for(let i = 0; i <= times; i++){
+  for(let i = 0; i < times; i++){
     callback(i)
   }
 }
