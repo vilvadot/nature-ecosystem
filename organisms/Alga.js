@@ -18,7 +18,7 @@ export class Alga extends Organism {
 
   _render() {
     return this.draw
-      .image('/seaweed.gif')
+      .image('organisms/seaweed.gif')
       .size(this.size, this.size)
       .move(this.x, this.y - this.size)
   }
