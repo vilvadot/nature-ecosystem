@@ -46,7 +46,7 @@ export class Fish extends Organism {
   }
 
   _image(){
-    return this.orientation.isRight() ? '/fish_right.png' : '/fishLeft.png'
+    return this.orientation.isRight() ? 'fish_right.png' : 'fishLeft.png'
   }
 
   _flip() {
