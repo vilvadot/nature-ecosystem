@@ -1,12 +1,13 @@
 import { Alga, Fish } from './organisms/index.js'
 import { Water } from './Water.js'
 import { times, Debugging } from './utils.js'
+import { CENSUS } from './config.js'
 
 const water = new Water()
 const creatures = []
 
-times(30, () => creatures.push(new Alga()))
-times(50, () => creatures.push(new Fish()))
+times(CENSUS.algae, () => creatures.push(new Alga()))
+times(CENSUS.fish, () => creatures.push(new Fish()))
 
 function mainLoop() {
   Debugging.render({ O2: water.oxygen.getLevel() })

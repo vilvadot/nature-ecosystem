@@ -1,7 +1,7 @@
 import { Organism } from './Organism.js'
-import { HEIGHT, WIDTH } from '../svgContext.js'
 import { random } from '../utils.js'
 import { EVENTS } from '../events.js';
+import { HEIGHT, WIDTH } from '../config.js'
 
 export class Alga extends Organism {
   constructor() {

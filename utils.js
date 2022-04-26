@@ -28,9 +28,9 @@ export class Vector {
     return this;
   }
 
-  multiply(multiplier){
-    this.x = this.x * multiplier;
-    this.y = this.y * multiplier;
+  multiply(vector){
+    this.x = this.x * vector.x;
+    this.y = this.y * vector.y;
     return this
   }
 }
