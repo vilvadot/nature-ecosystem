@@ -1,4 +1,4 @@
-import { svgContext } from '../svgContext.js'
+import { svgContext } from './svgContext.js'
 
 export class Graphic {
   constructor(child) {
