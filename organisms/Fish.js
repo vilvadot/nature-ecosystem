@@ -22,16 +22,16 @@ export class Fish extends Organism {
 
   _checkBounds() {
     if (!Bounds.fitsX(this.position.x)){
-      this.acceleration.multiply(new Vector(-1, 1))
+      this.velocity.multiply(new Vector(-1, 1))
       this._flip()
     }
   }
 
   _setupAnimation() {
-    this.acceleration = new Vector(random(-1, 1), .2)
+    this.velocity = new Vector(random(-1, 1), .2)
 
     setInterval(() => {
-      this.acceleration.multiply(new Vector(1, -1))
+      this.velocity.multiply(new Vector(1, -1))
     }, random(0, random(2000, 10000)))
   }
 
@@ -55,14 +55,14 @@ export class Fish extends Organism {
   }
 
   _checkOrientation() {
-    const isGoingLeft = this.acceleration.x <= 0;
+    const isGoingLeft = this.velocity.x <= 0;
     if (isGoingLeft && this.orientation.isRight()) {
       this._flip()
     }
   }
 
   _move() {
-    this.position.add(this.acceleration)
+    this.position.add(this.velocity)
     this.graphic.center(this.position.x, this.position.y)
   }
 
