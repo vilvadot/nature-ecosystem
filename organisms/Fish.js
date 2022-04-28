@@ -1,5 +1,6 @@
 import { Organism } from './Organism.js'
-import { Vector, random } from '../utils.js'
+import { random } from '../utils.js'
+import { Vector } from '../Vector.js'
 import { HEIGHT, WIDTH } from '../config.js'
 import { EVENTS } from '../events.js'
 import { Graphic } from '../Graphic.js'
@@ -60,5 +61,36 @@ export class Fish extends Organism {
   _consumeO2() {
     const QUANTITY = 0.2
     this.bus.emit(EVENTS.O2_CONSUMED, QUANTITY);
+  }
+}
+
+export class FollowerFish extends Organism {
+  constructor(mouse) {
+    super()
+    this.mouse = mouse
+    this.position = new Vector(random(WIDTH), random(HEIGHT))
+    this.velocity = Vector.ZERO;
+    this.acceleration = new Vector(.1, .1);
+    this.size = 50;
+    this.graphic = this._render()
+  }
+
+  update() {
+    this._moveTowardsMouse()
+  }
+
+  _moveTowardsMouse() {
+    const direction = Vector.substract(this.mouse.getPosition(), this.position)
+    this.acceleration = direction.normalize().scale(2)
+    this.velocity.add(this.acceleration).limit(4);
+    this.position.add(this.velocity)
+    this.graphic.center(this.position.x, this.position.y)
+  }
+
+  _render() {
+    const image = this.draw
+      .image('organisms/follower.png')
+      .size(this.size, this.size)
+    return new Graphic(image)
   }
 }
