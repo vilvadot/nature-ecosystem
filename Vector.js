@@ -13,18 +13,27 @@ export class Vector {
     return new Vector(x, y)
   }
 
+  static difference(vector1, vector2){
+    const result = this.substract(vector1, vector2)
+    return result.magnitude()
+  }
+
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 
-  _magnitude() {
+  copy(){
+    return new Vector(this.x, this.y)
+  }
+
+  magnitude() {
     return Math.sqrt(this.x ** 2 + this.y ** 2)
   }
 
   normalize() {
-    const magnitude = this._magnitude()
-    if (magnitude === 0) return
+    const magnitude = this.magnitude()
+    if (magnitude === 0) return this
 
     this.x = this.x / magnitude
     this.y = this.y / magnitude
@@ -44,7 +53,7 @@ export class Vector {
   }
 
   limit(maximum) {
-    if (this._magnitude() > maximum) {
+    if (this.magnitude() > maximum) {
       this.normalize().scale(maximum)
     }
     return this

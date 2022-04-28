@@ -73,6 +73,7 @@ export class FollowerFish extends Organism {
     this.acceleration = new Vector(.1, .1);
     this.size = 50;
     this.graphic = this._render()
+    this.orientation = 'LEFT'
   }
 
   update() {
@@ -80,11 +81,39 @@ export class FollowerFish extends Organism {
   }
 
   _moveTowardsMouse() {
-    const direction = Vector.substract(this.mouse.getPosition(), this.position)
+    const mousePosition = this.mouse.getPosition()
+    const direction = Vector.substract(mousePosition, this.position)
+  
     this.acceleration = direction.normalize().scale(2)
     this.velocity.add(this.acceleration).limit(4);
     this.position.add(this.velocity)
+    this._checkIfMouseCatched(mousePosition)
+  this._checkOrientation()
     this.graphic.center(this.position.x, this.position.y)
+  }
+
+  _flip() {
+    this.graphic.flip('x')
+    this.velocity.multiply(new Vector(-1, 1))
+  }
+
+  _checkOrientation() {
+    const isMovingRight = this.velocity.x > 0
+    if (isMovingRight && this.orientation === 'LEFT') {
+      this.orientation = 'RIGHT'
+      this.graphic.flip('x')
+    }
+    const isMovingLeft = this.velocity.x < 0
+    if (isMovingLeft && this.orientation === 'RIGHT') {
+      this.orientation = 'LEFT'
+      this.graphic.flip('x')
+    }
+  }
+
+  _checkIfMouseCatched(mousePosition){
+    if(Vector.difference(this.position, mousePosition) < 10){
+      this.position = mousePosition.copy()
+    }
   }
 
   _render() {
